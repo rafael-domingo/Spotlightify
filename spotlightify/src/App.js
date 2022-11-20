@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react'
+import Welcome from './pages/Welcome';
 
 function App() {
 
@@ -9,7 +10,7 @@ function App() {
   }, [0])
   return (
     <div className="App">
-      <h1>Spotlightify</h1>
+      <Welcome />
     </div>
   );
 }
