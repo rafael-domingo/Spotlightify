@@ -1,5 +1,5 @@
 .welcome{
-    background-color: #191414;
+    background: linear-gradient(to right, #191414, #191414);
     transition: all 0.5s ease;
     display: flex;
     justify-content: center;
@@ -10,7 +10,7 @@
 }
 
 .active-welcome {
-    background-color: gray
+    background: linear-gradient(to right, #DDD6F3, #FAACA8);
 }
 
 .logo-div {

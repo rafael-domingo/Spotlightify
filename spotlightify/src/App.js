@@ -1,9 +1,14 @@
 import React, {useEffect} from 'react'
 import Welcome from './pages/Welcome';
+import UserHome from './pages/UserHome';
 import './styles/app.scss';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 // import "@fortawesome/fontawesome-free/css/all.min.css";
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from 'react-router-dom'
 function App() {
 
   useEffect(() => {
@@ -13,7 +18,14 @@ function App() {
   }, [0])
   return (
     <div className="App">
-      <Welcome />
+      <Router>
+        <Routes>
+          <Route path='/' element={<Welcome />} />                      
+          <Route path='/userhome' element={<UserHome />} />                      
+        </Routes>
+      </Router>
+    
+      
     </div>
   );
 }

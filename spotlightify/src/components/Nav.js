@@ -1,0 +1,1 @@
+// use for navigating between 'Home', 'Aritsts', 'Albums', 'Playlists', 'Search'
