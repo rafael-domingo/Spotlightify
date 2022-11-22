@@ -12,8 +12,8 @@ import {
 function App() {
 
   useEffect(() => {
-    fetch('/api')
-      .then((response) => response.json())
+    fetch('/Spotify/authorizeSpotify')
+      .then(response => response.json())
       .then(data => console.log(data))
   }, [0])
   return (
