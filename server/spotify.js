@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const QueryString = require('qs');
+const querystring = require('querystring');
 const router = express.Router();
 
 router.get('/authorizeSpotify', async (req, res) => {
@@ -9,7 +9,7 @@ router.get('/authorizeSpotify', async (req, res) => {
     const url = 'https://accounts.spotify.com/authorize?'
     const scope = 'user-read-private user-read-email user-top-read';        
 
-    const redirectUrl = (url + QueryString.stringify({
+    const redirectUrl = (url + querystring.stringify({
         response_type: 'code',
         client_id: process.env.client_id,
         scope: scope,
@@ -17,7 +17,16 @@ router.get('/authorizeSpotify', async (req, res) => {
         dialog: 'true',
         // state: state
     }));
+    
     res.json(redirectUrl);
+    // next()
+})
+
+router.get('/callback', async (req, res) => {
+    console.log('callback')
+    console.log(req.query.code);
+    console.log(req.query.state);
+    next();
 })
 
 module.exports = router;

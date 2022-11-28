@@ -10,12 +10,14 @@ import {
   Route
 } from 'react-router-dom'
 function App() {
-
-  useEffect(() => {
-    fetch('/Spotify/authorizeSpotify')
+ fetch('/Spotify/authorizeSpotify')
       .then(response => response.json())
-      .then(data => console.log(data))
-  }, [0])
+      .then(data => window.location.assign(data))
+  // useEffect(() => {
+  //   fetch('/Spotify/authorizeSpotify')
+  //     .then(response => response.json())
+  //     .then(data => window.location.assign(data))
+  // }, [0])
   return (
     <div className="App">
       <Router>
