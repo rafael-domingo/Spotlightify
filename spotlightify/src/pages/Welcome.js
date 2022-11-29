@@ -13,6 +13,13 @@ function Welcome() {
             setActive(true);
         }, 2000);
     }, [0])
+
+    const handleLogin = () => {
+        fetch('/Spotify/authorizeSpotify')
+            .then(response => response.json())
+            .then(data => window.location.assign(data))  
+    }
+
     return (
         <div className={`welcome ${active ? 'active-welcome' : ''}`}>
             <div className='logo-div'>
@@ -21,7 +28,7 @@ function Welcome() {
                     className='login-button'
                     color='none'
                     rounded
-                    onClick={() => navigate('/userhome')}
+                    onClick={() => handleLogin()}
                 >
                     Login
                 </MDBBtn>

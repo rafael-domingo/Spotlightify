@@ -10,12 +10,7 @@ import {
   Route
 } from 'react-router-dom'
 function App() {
-
-  useEffect(() => {
-    fetch('/api')
-      .then((response) => response.json())
-      .then(data => console.log(data))
-  }, [0])
+ 
   return (
     <div className="App">
       <Router>
