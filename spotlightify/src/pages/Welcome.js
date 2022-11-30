@@ -3,9 +3,11 @@ import {
     MDBBtn
 } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function Welcome() {
     const [active, setActive] = React.useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -17,8 +19,45 @@ function Welcome() {
     const handleLogin = () => {
         fetch('/Spotify/authorizeSpotify')
             .then(response => response.json())
-            .then(data => window.location.assign(data))  
+            .then(data => window.location.assign(data))      
     }
+
+    const handleGetUserInfo = () => {
+        fetch('/Spotify/user', {
+            method: 'POST',
+            body: new URLSearchParams({
+                access_token: searchParams.get('access_token')
+            })
+        }).then(response => response.json())
+        .then(data => console.log(data))
+    }
+
+    const handleGetUserTop = (type) => {
+        fetch('/Spotify/userTopItems', {
+            method: 'POST',
+            body: new URLSearchParams({
+                access_token: searchParams.get('access_token'),
+                type: type,
+                time_range: 'short_term',
+                limit: '50'
+            })
+        }).then(response => response.json())
+        .then(data => console.log(data))
+    }
+
+    const handleGetUserLibrary = (type) => {
+        fetch('/Spotify/userLibrary', {
+            method: 'POST',
+            body: new URLSearchParams({
+                type: type,
+                access_token: searchParams.get('access_token'),
+                limit: '50'
+            })
+        }).then(response => response.json())
+        .then(data => console.log(data))
+    }
+
+
 
     return (
         <div className={`welcome ${active ? 'active-welcome' : ''}`}>
@@ -31,6 +70,31 @@ function Welcome() {
                     onClick={() => handleLogin()}
                 >
                     Login
+                </MDBBtn>
+                <MDBBtn
+                    onClick={() => handleGetUserInfo()}
+                >
+                    Get User
+                </MDBBtn>
+                 <MDBBtn
+                    onClick={() => handleGetUserTop('tracks')}
+                >
+                    Get Top Tracks
+                </MDBBtn>
+                 <MDBBtn
+                    onClick={() => handleGetUserTop('artists')}
+                >
+                    Get Top Artists
+                </MDBBtn>
+                 <MDBBtn
+                    onClick={() => handleGetUserLibrary('albums')}
+                >
+                    Get User Albums
+                </MDBBtn>
+                 <MDBBtn
+                    onClick={() => handleGetUserLibrary('tracks')}
+                >
+                    Get User Tracks
                 </MDBBtn>
             </div>
             
