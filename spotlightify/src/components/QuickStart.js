@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import {
+    MDBContainer,
+    MDBRow,
+    MDBCol,
+    MDBCard,
+    MDBCardBody,    
+} from 'mdb-react-ui-kit';
 import { useSelector } from 'react-redux';
 
 function QuickStart() {
@@ -39,14 +45,20 @@ function QuickStart() {
                     </MDBCol>
                     
                 </MDBRow>
-                <MDBRow className='w-90 d-flex flex-wrap align-items-center justify-content-center'>
+                <MDBRow className='w-90 row-cols-sm-1 row-cols-md-3 g-4 d-flex align-items-center justify-content-center'>
                     
                     {
                         quickStartArray.map((item) => {
                             return (
-                                <MDBCol style={{backgroundColor: 'pink'}} key={item.obj?.id} size={3} className='d-flex align-items-center justify-content-between m-1'>                        
-                                    <img src={item.image} style={{ width: '100px', height: '100px' }} />                                    
-                                    {item.name}                                    
+                                <MDBCol key={item.obj?.id} size={3} className='d-flex align-items-start justify-content-start'> 
+                                    <MDBCard background='light' className='h-100'>
+                                        <MDBCardBody className='p-0 w-100 d-flex align-items-center justify-content-around'>
+                                            <img src={item.image} style={{ width: '30%', height: 'auto' }} />                                                                                
+                                            <p className='text-muted'>{item.name}</p>                                               
+                                        </MDBCardBody>
+                                    </MDBCard>
+                               
+                                                               
                                 </MDBCol>                                
                             )
                         })
