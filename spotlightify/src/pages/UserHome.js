@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import QuickStart from '../components/QuickStart';
 import RecentlyPlayed from '../components/RecentlyPlayed';
 import Recommendations from '../components/Recommendations';
+import FeaturedPlaylists from '../components/FeaturedPlaylists';
 
 function UserHome() {
     const userState = useSelector((state) => state.user);
@@ -14,6 +15,7 @@ function UserHome() {
             <QuickStart />
             <RecentlyPlayed />
             <Recommendations />
+            <FeaturedPlaylists />
         </div>
     )
     

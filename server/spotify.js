@@ -173,6 +173,23 @@ router.post('/userFollowedArtists', async (req, res) => {
 })
 
 // SPOTIFY RECS 
+// get featured playlists
+router.post('/featuredPlaylists', async (req, res) => {
+    const url = `https://api.spotify.com/v1/browse/featured-playlists?` + querystring.stringify({
+        limit: req.body.limit
+    })
+    const headers = {
+        'Authorization': 'Bearer ' + req.body.access_token,
+        'Content-Type': 'application/json'
+    }
+    fetch(url, {
+        method: 'GET',
+        headers
+    })
+        .then(response => response.json())
+        .then(data => res.json(data))
+})
+
 // get new releases
 router.post('/newReleases', async (req, res) => {
     const url = `https://api.spotify.com/v1/browse/new-releases?` + querystring.stringify({

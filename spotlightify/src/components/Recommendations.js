@@ -40,7 +40,7 @@ function Recommendations() {
                 seed_values: seed_ids
             })
         }).then(response => response.json())
-        .then(data => {return data})
+            .then(data => { return data })        
     }
     return (
         <>
