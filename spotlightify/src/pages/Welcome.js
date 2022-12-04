@@ -4,16 +4,34 @@ import {
 } from 'mdb-react-ui-kit';
 import { useNavigate } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {
+    setUser,
+    setTokens,
+    setTopTracks,
+    setTopArtists,
+    setSavedTracks,
+    setSavedAlbums,
+    setFollowedArtists,
+    setUserPlaylists
+} from '../redux/userSlice';
 
 function Welcome() {
     const [active, setActive] = React.useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
         setTimeout(() => {
             setActive(true);
         }, 2000);
+        console.log(searchParams.get('access_token'));
+        if (searchParams.get('access_token') !== null) {
+            handleTokens()
+            handleGetUserInfo()            
+            .then(navigate('/loading'))            
+        }
     }, [0])
 
     const handleLogin = () => {
@@ -22,63 +40,29 @@ function Welcome() {
             .then(data => window.location.assign(data))      
     }
 
-    const handleGetUserInfo = () => {
+    const handleTokens = () => {
+        const tokenObject = {
+            access_token: searchParams.get('access_token'),
+            refresh_token: searchParams.get('refresh_token')
+        }
+        dispatch(setTokens(tokenObject))
+    }
+
+    const handleGetUserInfo = async () => {
         fetch('/Spotify/user', {
             method: 'POST',
             body: new URLSearchParams({
                 access_token: searchParams.get('access_token')
             })
         }).then(response => response.json())
-        .then(data => console.log(data))
+            .then(data => {
+                console.log(data)
+                console.log(data?.error)
+                dispatch(setUser(data))
+            })
     }
 
-    const handleGetUserTop = (type) => {
-        fetch('/Spotify/userTopItems', {
-            method: 'POST',
-            body: new URLSearchParams({
-                access_token: searchParams.get('access_token'),
-                type: type,
-                time_range: 'short_term',
-                limit: '50'
-            })
-        }).then(response => response.json())
-        .then(data => console.log(data))
-    }
-
-    const handleGetUserLibrary = (type) => {
-        fetch('/Spotify/userLibrary', {
-            method: 'POST',
-            body: new URLSearchParams({
-                type: type,
-                access_token: searchParams.get('access_token'),
-                limit: '50'
-            })
-        }).then(response => response.json())
-        .then(data => console.log(data))
-    }
-
-    const handleGetNewReleases = () => {
-        fetch('/Spotify/newReleases', {
-            method: 'POST',
-            body: new URLSearchParams({
-                access_token: searchParams.get('access_token'),
-                limit: '50'
-            })
-        }).then(response => response.json())
-        .then(data => console.log(data))
-    }
-
-    const handleGetRecommendations = (seed_artists) => {
-        fetch('/Spotify/recommendations', {
-            method: 'POST',
-            body: new URLSearchParams({
-                access_token: searchParams.get('access_token'),
-                limit: '100',
-                seed_artists: `${seed_artists[0]},${seed_artists[1]},${seed_artists[2]},${seed_artists[3]},${seed_artists[4]}`
-            })
-        }).then(response => response.json())
-        .then(data => console.log(data))
-    }
+   
 
 
     return (
@@ -92,37 +76,7 @@ function Welcome() {
                     onClick={() => handleLogin()}
                 >
                     Login
-                </MDBBtn>
-                <MDBBtn
-                    onClick={() => handleGetUserInfo()}
-                >
-                    Get User
-                </MDBBtn>
-                 <MDBBtn
-                    onClick={() => handleGetUserTop('tracks')}
-                >
-                    Get Top Tracks
-                </MDBBtn>
-                 <MDBBtn
-                    onClick={() => handleGetUserTop('artists')}
-                >
-                    Get Top Artists
-                </MDBBtn>
-                 <MDBBtn
-                    onClick={() => handleGetUserLibrary('albums')}
-                >
-                    Get User Albums
-                </MDBBtn>
-                 <MDBBtn
-                    onClick={() => handleGetUserLibrary('tracks')}
-                >
-                    Get User Tracks
-                </MDBBtn>
-                 <MDBBtn
-                    onClick={() => handleGetNewReleases()}
-                >
-                    Get New Releases
-                </MDBBtn>
+                </MDBBtn>            
             </div>
             
         </div>

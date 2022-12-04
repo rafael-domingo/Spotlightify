@@ -8,7 +8,8 @@ const initialState = {
     savedTracks: {},
     savedAlbums: {},
     followedArtists: {},
-    userPlaylists: {}
+    userPlaylists: {},
+    recentlyPlayed: {},
 }
 
 export const userSlice = createSlice({
@@ -38,6 +39,9 @@ export const userSlice = createSlice({
         },
         setUserPlaylists: (state, action) => {
             state.userPlaylists = action.payload
+        },
+        setRecentlyPlayed: (state, action) => {
+            state.recentlyPlayed = action.payload
         }
     }
 })
@@ -50,7 +54,8 @@ export const {
     setSavedTracks,
     setSavedAlbums,
     setFollowedArtists,
-    setUserPlaylists
+    setUserPlaylists,
+    setRecentlyPlayed
 } = userSlice.actions;
 
 export default userSlice.reducer;

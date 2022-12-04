@@ -11,7 +11,7 @@ router.get('/authorizeSpotify', async (req, res) => {
     console.log('authorize')
     // const state = generateRandomString(16);
     const url = 'https://accounts.spotify.com/authorize?'
-    const scope = 'user-read-private user-read-email user-top-read user-library-read';        
+    const scope = 'user-read-private user-read-email user-top-read user-library-read user-read-recently-played user-follow-read';        
 
     const redirectUrl = (url + querystring.stringify({
         response_type: 'code',
@@ -77,7 +77,7 @@ router.post('/user', async (req, res) => {
         headers,        
     })
         .then(response => response.json())
-        .then(data => res.json(data))        
+        .then(data => res.json(data))              
 })
 
 // get user top items
@@ -115,6 +115,61 @@ router.post('/userLibrary', async (req, res) => {
     })
         .then(response => response.json())
         .then(data => res.json(data))    
+})
+
+// get user's playlists 
+router.post('/userPlaylists', async (req, res) => {
+    console.log('playlists');
+    const url = `https://api.spotify.com/v1/me/playlists?` + querystring.stringify({
+        limit: req.body.limit
+    })
+    const headers = {
+        'Authorization': 'Bearer ' + req.body.access_token,
+        'Content-Type': 'application/json'
+    } 
+    fetch(url, {
+        method: 'GET',
+        headers
+    })
+        .then(response => response.json())
+        .then(data => res.json(data))    
+})  
+
+// get user's recently played
+router.post('/userRecentlyPlayed', async (req, res) => {
+    console.log('recently played');
+    const url = `https://api.spotify.com/v1/me/player/recently-played?` + querystring.stringify({
+        limit: req.body.limit,        
+    })
+    const headers = {
+        'Authorization': 'Bearer ' + req.body.access_token,
+        'Content-Type': 'application/json'
+    } 
+    fetch(url, {
+        method: 'GET',
+        headers
+    })
+        .then(response => response.json())
+        .then(data => res.json(data))   
+})
+
+// get user followed artists
+router.post('/userFollowedArtists', async (req, res) => {
+    console.log('followed artists');
+    const url = `https://api.spotify.com/v1/me/following?` + querystring.stringify({
+        type: 'artist',
+        limit: req.body.limit,
+    })
+    const headers = {
+        'Authorization': 'Bearer ' + req.body.access_token,
+        'Content-Type': 'application/json'
+    } 
+    fetch(url, {
+        method: 'GET',
+        headers
+    })
+        .then(response => response.json())
+        .then(data => res.json(data))  
 })
 
 // SPOTIFY RECS 
