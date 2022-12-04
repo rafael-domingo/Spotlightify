@@ -1,0 +1,51 @@
+.nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20rem;
+    height: 100%;
+    background-color: white;
+    box-shadow: 2px 2px 50px rgb(200, 200, 200);
+    overflow-y: scroll;
+    transform: translateX(-100%);
+    transition: all 0.5s ease;
+    opacity: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    cursor: pointer;
+}
+
+.nav-active {
+    transform: translateX(0%);
+    opacity: 1;
+}
+
+.nav-item {
+    color: #999999;
+    opacity: 0.5;
+    font-size: 1rem;
+    padding: 1rem;
+    transition: all 0.5s ease;
+    text-align: center;
+}
+
+.selected {
+    color: #1DB954;
+    opacity: 1;
+    font-size: 2rem;
+}
+
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    h1 {
+        color: black;
+        font-weight: bold;
+        font-size: 3rem;
+    }
+    
+}

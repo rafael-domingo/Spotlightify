@@ -1,21 +1,30 @@
-import React from 'react';
-import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import QuickStart from '../components/QuickStart';
-import RecentlyPlayed from '../components/RecentlyPlayed';
-import Recommendations from '../components/Recommendations';
-import FeaturedPlaylists from '../components/FeaturedPlaylists';
+
+import Nav from '../components/Nav';
+import Home from './Home';
+import Playlists from './Playlists';
 
 function UserHome() {
     const userState = useSelector((state) => state.user);
+    const [navState, setNavState] = useState(false);
+    const [view, setView] = useState('Home');
+
+    useEffect(() => {
+        setNavState(false);
+    }, [view])
+
+    const handleViewChange = () => {
+
+    }
 
     return (
         <div className='user-home'>
             <h1>User Home</h1>
-            <QuickStart />
-            <RecentlyPlayed />
-            <Recommendations />
-            <FeaturedPlaylists />
+            <button style={{position: 'absolute', right: '0', top: '0'}} onClick={() => setNavState(!navState)}>Nav</button>
+            <Nav isActive={navState} setNavState={setNavState} view={view} setView={setView} />
+            {view === 'Home' && (<Home />)}       
+            {view === 'Playlists' && (<Playlists/>)}
         </div>
     )
     
