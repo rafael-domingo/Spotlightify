@@ -5,6 +5,7 @@ const querystring = require('querystring');
 const { response } = require('express');
 const router = express.Router();
 
+// AUTHORIZATION
 // get login from user
 router.get('/authorizeSpotify', async (req, res) => {
     console.log('authorize')
@@ -61,6 +62,7 @@ router.get('/callback', async (req, res) => {
 
 })
 
+// USER DATA
 // get user profile
 router.post('/user', async (req, res) => {
     console.log('user profile');
@@ -97,7 +99,7 @@ router.post('/userTopItems', async (req, res) => {
         .then(data => res.json(data))
 })
 
-// get user's albums
+// get user's library (tracks and albums)
 router.post('/userLibrary', async (req, res) => {
     console.log('user albums');
     const url = `https://api.spotify.com/v1/me/${req.body.type}?` + querystring.stringify({
@@ -106,8 +108,7 @@ router.post('/userLibrary', async (req, res) => {
     const headers = {
         'Authorization': 'Bearer ' + req.body.access_token,
         'Content-Type': 'application/json'
-    }
-    console.log(url);
+    }    
     fetch(url, {
         method: 'GET',
         headers
@@ -116,6 +117,42 @@ router.post('/userLibrary', async (req, res) => {
         .then(data => res.json(data))    
 })
 
+// SPOTIFY RECS 
+// get new releases
+router.post('/newReleases', async (req, res) => {
+    const url = `https://api.spotify.com/v1/browse/new-releases?` + querystring.stringify({
+        limit: req.body.limit
+    })
+     const headers = {
+        'Authorization': 'Bearer ' + req.body.access_token,
+        'Content-Type': 'application/json'
+     }
+    fetch(url, {
+        method: 'GET',
+        headers
+    })
+        .then(response => response.json())
+        .then(data => res.json(data))    
+})
+
+// get recommendations
+router.post('/recommendations', async (req, res) => {
+    const url = `https://api.spotify.com/v1/recommendations?` + querystring.stringify({
+        seed_artists: req.body.seed_artists,
+        limit: req.body.limit
+    })
+    const headers = {
+        'Authorization': 'Bearer ' + req.body.access_token,
+        'Content-Type': 'application/json'
+    }
+    fetch(url, {
+        method: 'GET',
+        headers
+    })
+        .then(response => response.json())
+        .then(data => res.json(data))
+    
+})
 
 
 module.exports = router;

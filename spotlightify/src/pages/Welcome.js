@@ -57,6 +57,28 @@ function Welcome() {
         .then(data => console.log(data))
     }
 
+    const handleGetNewReleases = () => {
+        fetch('/Spotify/newReleases', {
+            method: 'POST',
+            body: new URLSearchParams({
+                access_token: searchParams.get('access_token'),
+                limit: '50'
+            })
+        }).then(response => response.json())
+        .then(data => console.log(data))
+    }
+
+    const handleGetRecommendations = (seed_artists) => {
+        fetch('/Spotify/recommendations', {
+            method: 'POST',
+            body: new URLSearchParams({
+                access_token: searchParams.get('access_token'),
+                limit: '100',
+                seed_artists: `${seed_artists[0]},${seed_artists[1]},${seed_artists[2]},${seed_artists[3]},${seed_artists[4]}`
+            })
+        }).then(response => response.json())
+        .then(data => console.log(data))
+    }
 
 
     return (
@@ -95,6 +117,11 @@ function Welcome() {
                     onClick={() => handleGetUserLibrary('tracks')}
                 >
                     Get User Tracks
+                </MDBBtn>
+                 <MDBBtn
+                    onClick={() => handleGetNewReleases()}
+                >
+                    Get New Releases
                 </MDBBtn>
             </div>
             
