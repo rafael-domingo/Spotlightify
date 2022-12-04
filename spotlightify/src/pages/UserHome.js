@@ -6,6 +6,7 @@ import Artists from './Artists';
 import Home from './Home';
 import Playlists from './Playlists';
 import Albums from './Albums';
+import Tracks from './Tracks';
 
 function UserHome() {
     const userState = useSelector((state) => state.user);
@@ -28,6 +29,7 @@ function UserHome() {
             {view === 'Playlists' && (<Playlists />)}
             {view === 'Artists' && (<Artists />)}
             {view === 'Albums' && (<Albums />)}
+            {view === 'Tracks' && (<Tracks />)}
         </div>
     )
     
