@@ -192,10 +192,20 @@ router.post('/newReleases', async (req, res) => {
 
 // get recommendations
 router.post('/recommendations', async (req, res) => {
-    const url = `https://api.spotify.com/v1/recommendations?` + querystring.stringify({
-        seed_artists: req.body.seed_artists,
-        limit: req.body.limit
-    })
+    console.log('recommendations');
+    console.log(req.body.type);
+    // seed_values can be a combination of artist IDs, genres, and trackIDs
+    if (req.body.type === 'tracks') {
+        var url = `https://api.spotify.com/v1/recommendations?` + querystring.stringify({                         
+            seed_tracks: req.body.seed_values,        
+            limit: req.body.limit        
+        })        
+    } else if (req.body.type === 'artists') {
+        var url = `https://api.spotify.com/v1/recommendations?` + querystring.stringify({    
+            seed_artists: req.body.seed_values,                           
+            limit: req.body.limit        
+        })   
+    }    
     const headers = {
         'Authorization': 'Bearer ' + req.body.access_token,
         'Content-Type': 'application/json'
