@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     MDBContainer,
     MDBRow,
@@ -7,12 +7,13 @@ import {
     MDBCard,
     MDBCardBody,
 } from 'mdb-react-ui-kit';
+import { setCurrentPlayback } from '../redux/playbackSlice';
 
 function FeaturedPlaylists() {
     const userState = useSelector((state) => state.user);
     const access_token = useSelector((state) => state.user.tokens.access_token);
     const [featuredPlaylists, setFeaturedPlaylists] = useState([]);
-
+    const dispatch = useDispatch();
     useEffect(() => {        
         handleGetFeaturedPlaylists().then(response => setFeaturedPlaylists(response));
     }, [userState])
@@ -41,10 +42,10 @@ function FeaturedPlaylists() {
                         featuredPlaylists?.playlists?.items?.map((item) => {                        
                             return (                            
                                 <MDBCol size={3} style={{ backgroundColor: 'pink' }} className='d-flex align-items-center justify-content-between'>                                    
-                                    <MDBCard background='light' className='h-100'>
+                                    <MDBCard onClick={() => dispatch(setCurrentPlayback(item))} background='light' className='h-100'>
                                          <MDBCardBody className='p-0 w-100 d-flex align-items-center justify-content-between'>
-                                            <img src={item.images[0].url} style={{ width: '30%', height: 'auto' }} />                                            
-                                            {item.name}                                            
+                                            <img src={item?.images[0].url} style={{ width: '30%', height: 'auto' }} />                                            
+                                            {item?.name}                                            
                                         </MDBCardBody>
                                     </MDBCard>                                 
                                 </MDBCol>

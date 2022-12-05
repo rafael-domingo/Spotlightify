@@ -6,11 +6,13 @@ import {
     MDBCard,
     MDBCardBody,
 } from 'mdb-react-ui-kit';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setCurrentPlayback } from '../redux/playbackSlice';
 
 function RecentlyPlayed() {
     const userState = useSelector((state) => state.user);
     const [recentlyPlayedArray, setRecentlyPlayedArray] = useState([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const array = [];
@@ -37,7 +39,7 @@ function RecentlyPlayed() {
                         recentlyPlayedArray.map((item) => {                        
                             return (                            
                                 <MDBCol size={3} style={{ backgroundColor: 'pink' }} className='d-flex align-items-center justify-content-between'>                                    
-                                    <MDBCard background='light' className='h-100'>
+                                    <MDBCard onClick={() => dispatch(setCurrentPlayback(item.obj.track))} background='light' className='h-100'>
                                          <MDBCardBody className='p-0 w-100 d-flex align-items-center justify-content-between'>
                                             <img src={item.image} style={{ width: '30%', height: 'auto' }} />                                            
                                             {item.name}                                            

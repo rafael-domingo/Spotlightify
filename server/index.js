@@ -6,6 +6,7 @@ const app = express();
 const cors = require('cors');
 const path = require('path');
 const spotify = require('./spotify');
+const playback = require('./playback');
 
 app.use(cors());
 
@@ -18,6 +19,7 @@ app.get('/', (req, res, next) => {
   next()
 })
 app.use('/Spotify', spotify);
+app.use('/SpotifyPlayback', playback);
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

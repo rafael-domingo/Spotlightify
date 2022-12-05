@@ -13,7 +13,7 @@ function Albums() {
                     {
                         userState.savedAlbums?.items?.map((item) => {
                             return(
-                                <MDBCol className='m-1 d-flex flex-wrap justify-content-center align-items-center flex-wrap' size={3}>
+                                <MDBCol className='m-1 d-flex justify-content-center align-items-center flex-wrap' size={3}>
                                     <MDBCard className='h-100 w-100'>
                                         <MDBCardBody>
                                             <img src={item?.album?.images[0].url} style={{ width: '100px', height: '100px' }} />                                                                                    

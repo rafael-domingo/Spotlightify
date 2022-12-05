@@ -11,7 +11,7 @@ router.get('/authorizeSpotify', async (req, res) => {
     console.log('authorize')
     // const state = generateRandomString(16);
     const url = 'https://accounts.spotify.com/authorize?'
-    const scope = 'user-read-private user-read-email user-top-read user-library-read user-read-recently-played user-follow-read';        
+    const scope = 'user-read-private user-read-email user-top-read user-library-read user-library-modify user-read-recently-played user-follow-read streaming user-read-playback-state user-modify-playback-state';        
 
     const redirectUrl = (url + querystring.stringify({
         response_type: 'code',
