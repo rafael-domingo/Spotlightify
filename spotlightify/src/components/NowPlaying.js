@@ -28,8 +28,8 @@ function NowPlaying() {
 
     return (
         <div>
-            <div style={{display: 'none'}}>
-                <SpotifyWebPlayer
+            <div style={{position: 'absolute', bottom: '0', zIndex: 10, width: '100%'}}>
+                <SpotifyWebPlayer                    
                     token={access_token}
                     autoPlay={false}
                     play={isPlayingState}
