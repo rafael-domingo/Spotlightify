@@ -8,31 +8,28 @@ function Playlists({ panelState, setPanelState }) {
     const dispatch = useDispatch();
 
     return (
-        <div className='overflow-scroll' style={{height: '100vh'}}>
-            <h1>Playlists</h1>
-            <MDBContainer>
-                <MDBRow size={12} className='d-flex justify-content-center'>
-                    {
-                        userState.userPlaylists?.items?.map((item) => {
-                            return (
-                                <MDBCol key={item?.id} size={3} className='m-1 d-flex flex-wrap justify-content-center align-items-center'>                                
-                                    <MDBCard onClick={() => {
-                                        dispatch(setType('playlist'))
-                                        dispatch(setObject(item))
-                                        setPanelState(!panelState)
-                                    }} className='h-100 w-100'>
-                                        <MDBCardBody>
-                                            <img src={item.images[0].url} style={{width: '100px', height: '100px'}} />                                        
-                                                <p className='w-100 text-align-center d-flex justify-content-center'>{item.name}</p>                                            
-                                                {/* {item.description}                                             */}
-                                        </MDBCardBody>                                        
-                                    </MDBCard>
-                                </MDBCol>
-                            )
-                        })
-                    }
-                </MDBRow>
-            </MDBContainer>
+        <div className='card-container'>
+            <div>
+                <h1>Playlists</h1>
+            </div>
+            <div className='card-array' style={{flexWrap: 'wrap', overflowY: 'scroll', height: '100vh'}}>
+                {
+                    userState.userPlaylists?.items?.map((item) => {
+                        return (
+                            <div 
+                                onClick={() => {
+                                    dispatch(setType('playlist'))
+                                    dispatch(setObject(item))
+                                    setPanelState(!panelState)
+                                }}
+                                className='card-box'>
+                                    <img src={item.images[0].url} />                                        
+                                    <p className='card-text'>{item.name}</p>                                                                                        
+                            </div>                               
+                        )
+                    })
+                }
+            </div>                      
         </div>
     )
 }

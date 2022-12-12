@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import {
     MDBContainer,
@@ -7,15 +7,16 @@ import {
     MDBCard,
     MDBCardBody
 } from 'mdb-react-ui-kit';
+import { setObject, setType } from '../redux/panelSlice';
 
 
 
-function Recommendations() {
+function Recommendations({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
     const access_token = useSelector(state => state.user.tokens.access_token); 
     const [recommendations_seed_artists, setRecommendations_seed_artists] = useState();
     const [recommendations_seed_tracks, setRecommendations_seed_tracks] = useState();
-
+    const dispatch = useDispatch();
     useEffect(() => {
         const seed_artists = [];        
         const seed_tracks = [];
@@ -43,45 +44,51 @@ function Recommendations() {
             .then(data => { return data })        
     }
     return (
-        <>
-            <MDBContainer style={{height: '20vh'}} fluid className='d-flex flex-wrap overflow-scroll'>
-                <MDBRow className='w-100 d-flex flex-wrap'>
-                    <MDBCol>
-                        Your Recommendations
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow className='w-100 d-flex flex-nowrap overflow-scroll'>            
-                    {                        
-                        recommendations_seed_artists?.tracks.map((item) => {                        
-                            return (                            
-                                <MDBCol size={3} style={{ backgroundColor: 'pink' }} className='d-flex align-items-center justify-content-between'>                                    
-                                    <MDBCard background='light' className='h-100'>
-                                         <MDBCardBody className='p-0 w-100 d-flex align-items-center justify-content-between'>
-                                            <img src={item.album.images[0].url} style={{ width: '30%', height: 'auto' }} />                                            
-                                            {item.name}                                            
-                                        </MDBCardBody>
-                                    </MDBCard>                                 
-                                </MDBCol>
-                        )
-                    })
-                    }   
-                     {                        
-                        recommendations_seed_tracks?.tracks.map((item) => {                        
-                            return (                            
-                                <MDBCol size={3} style={{ backgroundColor: 'pink' }} className='d-flex align-items-center justify-content-between'>                                    
-                                    <MDBCard background='light' className='h-100'>
-                                         <MDBCardBody className='p-0 w-100 d-flex align-items-center justify-content-between'>
-                                            <img src={item.album.images[0].url} style={{ width: '30%', height: 'auto' }} />                                            
-                                            {item.name}                                            
-                                        </MDBCardBody>
-                                    </MDBCard>                                 
-                                </MDBCol>
-                        )
-                    })
-                    }          
-                </MDBRow>    
-            </MDBContainer>
-        </>
+        <div className='card-container'>
+            <div className='headline'>
+                <h3>Recommendations</h3>
+            </div>
+            <div className='card-array'>
+                {                        
+                recommendations_seed_artists?.tracks.map((item) => {                        
+                    return (                            
+                        <div
+                            onClick={() => {
+                                dispatch(setType('track'))
+                                dispatch(setObject(item))
+                                setPanelState(!panelState)
+                            }}
+                            className='card-box'
+                        >
+                            <img src={item.album.images[0].url} />                                            
+                            <p className='card-text'>{item.name}</p>
+                            <p className='card-subtext'>{item.artists?.[0]?.name}</p>
+                        </div>    
+                )   
+                })  
+                }   
+                {                        
+                recommendations_seed_tracks?.tracks.map((item) => {                        
+                    return (     
+                          <div
+                            onClick={() => {
+                                dispatch(setType('track'))
+                                dispatch(setObject(item))
+                                setPanelState(!panelState)
+                            }}
+                            className='card-box'
+                        >
+                            <img src={item.album.images[0].url} />                                            
+                            <p className='card-text'>{item.name}</p>
+                            <p className='card-subtext'>{item.artists?.[0]?.name}</p>
+                        </div>  
+                )
+            })
+            }      
+            </div>
+        </div>
+                
+        
     )
 }
 

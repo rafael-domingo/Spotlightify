@@ -8,8 +8,9 @@ import {
 } from 'mdb-react-ui-kit';
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPlayback } from '../redux/playbackSlice';
+import { setObject, setType } from '../redux/panelSlice';
 
-function RecentlyPlayed() {
+function RecentlyPlayed({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
     const [recentlyPlayedArray, setRecentlyPlayedArray] = useState([]);
     const dispatch = useDispatch();
@@ -26,32 +27,32 @@ function RecentlyPlayed() {
         setRecentlyPlayedArray(array);        
     }, [userState])
 
-    return (
-        <>
-            <MDBContainer style={{height: '20vh'}} fluid className='d-flex flex-wrap overflow-scroll'>
-                <MDBRow className='w-100 d-flex flex-wrap'>
-                    <MDBCol>
-                        Recently Played
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow className='w-100 d-flex flex-nowrap overflow-scroll'>            
+    return (        
+        <div className='card-container'>
+            <div className='headline'>
+                <h3>Recently Played</h3>
+            </div>
+            <div className='card-array'>
                     {                        
-                        recentlyPlayedArray.map((item) => {                        
-                            return (                            
-                                <MDBCol size={3} style={{ backgroundColor: 'pink' }} className='d-flex align-items-center justify-content-between'>                                    
-                                    <MDBCard onClick={() => dispatch(setCurrentPlayback(item.obj.track))} background='light' className='h-100'>
-                                         <MDBCardBody className='p-0 w-100 d-flex align-items-center justify-content-between'>
-                                            <img src={item.image} style={{ width: '30%', height: 'auto' }} />                                            
-                                            {item.name}                                            
-                                        </MDBCardBody>
-                                    </MDBCard>                                 
-                                </MDBCol>
-                        )
-                    })
-                    }          
-                </MDBRow>    
-            </MDBContainer>
-        </>
+                    recentlyPlayedArray.map((item) => {                        
+                        return (                            
+                            <div
+                                onClick={() => {
+                                    dispatch(setType('track'))
+                                    dispatch(setObject(item.obj.track))
+                                    setPanelState(!panelState)
+                                }}
+                                className='card-box'>
+                                <img src={item.image} />                                            
+                                <p className='card-text'>{item.name}</p>
+                                <p className='card-subtext'>{item.obj?.track?.artists?.[0]?.name}</p>
+                            </div>                                       
+                    )
+                })
+                }    
+            </div>
+        </div>                                      
+        
     )
 }
 

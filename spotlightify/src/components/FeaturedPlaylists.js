@@ -8,8 +8,9 @@ import {
     MDBCardBody,
 } from 'mdb-react-ui-kit';
 import { setCurrentPlayback } from '../redux/playbackSlice';
+import { setObject, setType } from '../redux/panelSlice';
 
-function FeaturedPlaylists() {
+function FeaturedPlaylists({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
     const access_token = useSelector((state) => state.user.tokens.access_token);
     const [featuredPlaylists, setFeaturedPlaylists] = useState([]);
@@ -30,31 +31,31 @@ function FeaturedPlaylists() {
     }
 
     return (
-        <>
-             <MDBContainer style={{height: '20vh'}} fluid className='d-flex flex-wrap overflow-scroll'>
-                <MDBRow className='w-100 d-flex flex-wrap'>
-                    <MDBCol>
-                        {featuredPlaylists?.message}
-                    </MDBCol>
-                </MDBRow>
-                <MDBRow className='w-100 d-flex flex-nowrap overflow-scroll'>            
-                    {                        
-                        featuredPlaylists?.playlists?.items?.map((item) => {                        
-                            return (                            
-                                <MDBCol size={3} style={{ backgroundColor: 'pink' }} className='d-flex align-items-center justify-content-between'>                                    
-                                    <MDBCard onClick={() => dispatch(setCurrentPlayback(item))} background='light' className='h-100'>
-                                         <MDBCardBody className='p-0 w-100 d-flex align-items-center justify-content-between'>
-                                            <img src={item?.images[0].url} style={{ width: '30%', height: 'auto' }} />                                            
-                                            {item?.name}                                            
-                                        </MDBCardBody>
-                                    </MDBCard>                                 
-                                </MDBCol>
-                        )
-                    })
-                    }          
-                </MDBRow>    
-            </MDBContainer>
-        </>
+        <div className='card-container'>
+            <div className='headline'>
+                <h3>{featuredPlaylists?.message}</h3>
+            </div>
+            <div className='card-array'>
+                {                        
+                    featuredPlaylists?.playlists?.items?.map((item) => {                        
+                        return (                            
+                            <div
+                                onClick={() => {
+                                    dispatch(setType('playlist'))
+                                    dispatch(setObject(item))
+                                    setPanelState(!panelState)
+                                }}
+                                className='card-box'
+                            >
+                                <img src={item?.images[0].url}/>                                            
+                                <p className='card-text'>{item?.name}</p>                                
+                            </div>
+                               
+                    )
+                })
+                }   
+            </div>
+        </div>       
     )
 }
 

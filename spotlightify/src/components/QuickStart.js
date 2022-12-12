@@ -6,66 +6,78 @@ import {
     MDBCard,
     MDBCardBody,    
 } from 'mdb-react-ui-kit';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setObject, setType } from '../redux/panelSlice';
 
-function QuickStart() {
+function QuickStart({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
     const [quickStartArray, setQuickStartArray] = useState([]);
+    const dispatch = useDispatch();
+
     useEffect(() => {
         const array = [];
         for (let index = 0; index < 3; index++) {
             array.push({
                 name: userState.userPlaylists?.items[index].name,
                 image: userState.userPlaylists?.items[index].images[0].url,
-                obj: userState.userPlaylists?.items[index]
+                obj: userState.userPlaylists?.items[index],
+                type: 'playlist'
             })            
         }
         for (let index = 0; index < 3; index++) {
             array.push({
                 name: userState.topTracks?.items[index].name,
                 image: userState.topTracks?.items[index].album.images[0].url,
-                obj: userState.topTracks?.items[index]
+                obj: userState.topTracks?.items[index],
+                type: 'track'
             })            
         }
         for (let index = 0; index < 3; index++) {
             array.push({
                 name: userState.topArtists?.items[index].name,
                 image: userState.topArtists?.items[index].images[0].url,
-                obj: userState.topArtists?.items[index]
+                obj: userState.topArtists?.items[index],
+                type: 'artist'
             })            
         }
         setQuickStartArray(array);
     }, [userState])
     return (
-        <>
-            <MDBContainer fluid className='d-flex flex-wrap justify-content-center align-items-start'>
-                <MDBRow className='w-100 d-flex flex-wrap align-items-center justify-content-center'>
-                    <MDBCol size={9}>
-                        <h3>Good evening</h3>
-                    </MDBCol>
-                    
-                </MDBRow>
-                <MDBRow className='w-90 row-cols-sm-1 row-cols-md-3 g-4 d-flex align-items-center justify-content-center'>
-                    
-                    {
-                        quickStartArray.map((item) => {
-                            return (
-                                <MDBCol key={item.obj?.id} size={3} className='d-flex align-items-start justify-content-start'> 
-                                    <MDBCard background='light' className='h-100'>
-                                        <MDBCardBody className='p-0 w-100 d-flex align-items-center justify-content-around'>
-                                            <img src={item.image} style={{ width: '30%', height: 'auto' }} />                                                                                
-                                            <p className='text-muted'>{item.name}</p>                                               
-                                        </MDBCardBody>
-                                    </MDBCard>
-                               
-                                                               
-                                </MDBCol>                                
-                            )
-                        })
-                    }                                       
-                </MDBRow>
-            </MDBContainer>
-        </>
+    
+        <div className='quick-start'>                
+            <div className='headline'>
+                <h3>Good evening</h3>
+            </div>                                    
+            <div className='quick-start-array'>   
+                
+                {
+                    quickStartArray.map((item) => {
+                        return (
+                            <div
+                                onClick={() => {
+                                    dispatch(setType(item.type))
+                                    dispatch(setObject(item.obj))
+                                    setPanelState(!panelState)
+                                }}
+                                key={item.obj?.id}
+                                className='quick-start-card'>                                                             
+                                <img src={item.image} style={item.type === 'artist' ? { borderRadius: '50%' } : { } } />       
+                                <div>
+                                    <p className='card-text' style={{ textAlign: 'left' }}>{item.name}</p>                                                                                   
+                                    {
+                                        item.type === 'track' && (
+                                            <p className='card-subtext' style={{ textAlign: 'left', paddingLeft: '10px' }}>{item.obj.artists?.[0]?.name}</p>
+                                        )
+                                    }
+                                </div>
+                            </div>                                
+                        )
+                    })
+                }                                       
+            </div>
+        
+        </div>
+    
     )
 }
 

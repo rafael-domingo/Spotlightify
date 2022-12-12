@@ -52,7 +52,7 @@ function Panel({isActive}) {
                     }
                     setPanelHistory([...panelHistory, panelObject]);              
                 } else if (panelState?.type === 'track') {  
-                    const url = `https://api.spotify.com/v1/albums/${panelState?.object?.track?.album?.id}/tracks`;
+                    const url = `https://api.spotify.com/v1/albums/${panelState?.object?.album?.id}/tracks`;
                     const headers = {
                         'Authorization': 'Bearer ' + access_token,
                         'Content-Type': 'application/json'
@@ -64,9 +64,9 @@ function Panel({isActive}) {
                         .then(response => response.json())
                         .then(data => {
                             const panelObject = {
-                                title: panelState?.object?.track?.album?.name,
-                                subtitle: panelState?.object?.track?.album?.artists?.[0]?.name,
-                                image: panelState?.object?.track?.album?.images?.[0]?.url,
+                                title: panelState?.object?.album?.name,
+                                subtitle: panelState?.object?.album?.artists?.[0]?.name,
+                                image: panelState?.object?.album?.images?.[0]?.url,
                                 list: data.items,
                                 type: panelState?.type,
                                 object: panelState?.object

@@ -8,32 +8,30 @@ function Albums({ panelState, setPanelState }) {
     const dispatch = useDispatch();
 
     return (
-        <div className='overflow-scroll' style={{height: '100vh'}}>
-            <h1>Albums</h1>
-            <MDBContainer>
-                <MDBRow size={12} className='d-flex justify-content-center'>
-                    {
-                        userState.savedAlbums?.items?.map((item) => {
-                            return(
-                                <MDBCol className='m-1 d-flex justify-content-center align-items-center flex-wrap' size={3}>
-                                    <MDBCard onClick={() => {
-                                        dispatch(setType('album'))
-                                        dispatch(setObject(item))
-                                        setPanelState(!panelState)
-                                    }} className='h-100 w-100'>
-                                        <MDBCardBody>
-                                            <img src={item?.album?.images[0].url} style={{ width: '100px', height: '100px' }} />                                                                                    
-                                            <p className='w-100 text-align-center d-flex justify-content-center'>{item.album.name}</p>                                                                                  
-                                            <p className='text-muted w-100 text-align-center d-flex justify-content-center'>{item.album.artists[0].name}</p>                                                                
-                                        </MDBCardBody>                                                
-                                    </MDBCard>                                                                     
-                                </MDBCol>
-                            )
-                        })
-                    }                
-                </MDBRow>
-
-            </MDBContainer>
+        <div className='card-container'>
+            <div className='headline'>
+                <h1>Albums</h1>
+            </div>
+            <div className='card-array' style={{flexWrap: 'wrap', overflowY: 'scroll', height: '100vh'}}>
+                {
+                    userState.savedAlbums?.items?.map((item) => {
+                        return(
+                            
+                            <div onClick={() => {
+                                dispatch(setType('album'))
+                                dispatch(setObject(item))
+                                setPanelState(!panelState)
+                            }} className='card-box'>                               
+                                <img src={item?.album?.images[0].url} />                                                                                    
+                                <p className='card-text'>{item.album.name}</p>                                                                                  
+                                <p className='card-subtext'>{item.album.artists[0].name}</p>                                                                
+                            
+                            </div>                                                                     
+                        
+                        )
+                    })
+                }    
+            </div>           
         </div>
     )    
 }
