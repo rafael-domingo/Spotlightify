@@ -6,8 +6,11 @@ import {
     MDBCard,
     MDBCardBody,    
 } from 'mdb-react-ui-kit';
+import { FaPlayCircle } from 'react-icons/fa';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { setObject, setType } from '../redux/panelSlice';
+import { setCurrentPlayback } from '../redux/playbackSlice';
 
 function QuickStart({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
@@ -53,16 +56,27 @@ function QuickStart({ panelState, setPanelState }) {
                 {
                     quickStartArray.map((item) => {
                         return (
-                            <div
-                                onClick={() => {
+                            <div                               
+                                key={item.obj?.id}
+                                className='quick-start-card'>  
+                                <div>
+                                    <div
+                                        onClick={() => {
+                                            dispatch(setCurrentPlayback(item.obj))
+                                        }}
+                                        className='play-button'
+                                        style={item.type === 'artist' ? { borderRadius: '50%' } : {}}
+                                        >                                        
+                                        <FaPlayCircle style={{ height: '50%', width: '50%' }}/>
+                                        </div>
+                                    <img src={item.image} style={item.type === 'artist' ? { borderRadius: '50%' } : {}} />       
+                                </div>                                
+                                <div
+                                 onClick={() => {
                                     dispatch(setType(item.type))
                                     dispatch(setObject(item.obj))
                                     setPanelState(!panelState)
-                                }}
-                                key={item.obj?.id}
-                                className='quick-start-card'>                                                             
-                                <img src={item.image} style={item.type === 'artist' ? { borderRadius: '50%' } : { } } />       
-                                <div>
+                                }}>
                                     <p className='card-text' style={{ textAlign: 'left' }}>{item.name}</p>                                                                                   
                                     {
                                         item.type === 'track' && (

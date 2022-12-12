@@ -58,10 +58,34 @@
     }    
 }
 
+.play-button {
+    opacity: 0;
+    transition: 0.5s all ease;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width: 100px;    
+    background-color: none;
+    border-radius: 10px;
+    display: flex;    
+    justify-content: center;
+    align-items: center;
+    color: rgb(16, 225, 16);
+}
+
+.play-button:hover {    
+    opacity: 1;
+    background-color: rgba(16, 16, 16, 0.498);    
+}
+
 .quick-start-card:hover {
     background-color: rgba(255, 255, 255, 0.376);
     scale: 1.1;
+
+    
 }
+
 
 .card-container {
     display: flex;
