@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
 import { setObject, setType } from '../redux/panelSlice';
 
-function Albums() {
+function Albums({ panelState, setPanelState }) {
     const userState = useSelector((state => state.user));
     const dispatch = useDispatch();
 
@@ -19,6 +19,7 @@ function Albums() {
                                     <MDBCard onClick={() => {
                                         dispatch(setType('album'))
                                         dispatch(setObject(item))
+                                        setPanelState(!panelState)
                                     }} className='h-100 w-100'>
                                         <MDBCardBody>
                                             <img src={item?.album?.images[0].url} style={{ width: '100px', height: '100px' }} />                                                                                    

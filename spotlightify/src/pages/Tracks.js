@@ -3,7 +3,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setObject, setType } from '../redux/panelSlice';
 
-function Tracks() {
+function Tracks({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
     const dispatch = useDispatch();
     return (
@@ -17,6 +17,7 @@ function Tracks() {
                                     <MDBCol onClick={() => {
                                         dispatch(setType('track'))
                                         dispatch(setObject(item))
+                                        setPanelState(!panelState);
                                     }} size={12} className='d-flex justify-content-between m-1'>
                                         <img src={item.track?.album?.images[0].url} style={{height: '50px', width: '50px'}}/>
                                         <p>{item.track?.name}</p>

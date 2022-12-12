@@ -38,9 +38,9 @@ function UserHome() {
             <div className={`container ${navState ? 'container-inactive-right': ''} ${panelState ? 'container-inactive-left': ''}`}>
             {view === 'Home' && (<Home />)}       
                 {view === 'Playlists' && (<Playlists panelState={panelState} setPanelState={setPanelState} />)}
-            {view === 'Artists' && (<Artists />)}
-            {view === 'Albums' && (<Albums />)}
-            {view === 'Tracks' && (<Tracks />)}
+            {view === 'Artists' && (<Artists panelState={panelState} setPanelState={setPanelState}/>)}
+            {view === 'Albums' && (<Albums panelState={panelState} setPanelState={setPanelState}/>)}
+            {view === 'Tracks' && (<Tracks panelState={panelState} setPanelState={setPanelState}/>)}
             </div>
          
         </div>
