@@ -9,6 +9,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { setCurrentPlayback } from '../redux/playbackSlice';
 import { setObject, setType } from '../redux/panelSlice';
+import { FaPlayCircle } from 'react-icons/fa';
 
 function RecentlyPlayed({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
@@ -36,16 +37,30 @@ function RecentlyPlayed({ panelState, setPanelState }) {
                     {                        
                     recentlyPlayedArray.map((item) => {                        
                         return (                            
-                            <div
-                                onClick={() => {
+                            <div className='card-box'>
+                                <div>
+                                    <div
+                                        onClick={() => {
+                                            console.log(item.obj.track)
+                                            dispatch(setCurrentPlayback(item.obj.track))
+                                        }}
+                                        className='play-button'  
+                                        style={{height: '200px', width: '200px'}}
+                                        >                                        
+                                        <FaPlayCircle style={{ height: '50%', width: '50%' }}/>
+                                    </div>
+                                    <img src={item.image} />                                            
+                                </div>
+                                <div
+                                    onClick={() => {
                                     dispatch(setType('track'))
                                     dispatch(setObject(item.obj.track))
                                     setPanelState(!panelState)
-                                }}
-                                className='card-box'>
-                                <img src={item.image} />                                            
-                                <p className='card-text'>{item.name}</p>
-                                <p className='card-subtext'>{item.obj?.track?.artists?.[0]?.name}</p>
+                                    }}
+                                >
+                                    <p className='card-text'>{item.name}</p>
+                                    <p className='card-subtext'>{item.obj?.track?.artists?.[0]?.name}</p>
+                                    </div>
                             </div>                                       
                     )
                 })

@@ -8,6 +8,8 @@ import {
     MDBCardBody
 } from 'mdb-react-ui-kit';
 import { setObject, setType } from '../redux/panelSlice';
+import { setCurrentPlayback } from '../redux/playbackSlice';
+import { FaPlayCircle } from 'react-icons/fa';
 
 
 
@@ -52,35 +54,61 @@ function Recommendations({ panelState, setPanelState }) {
                 {                        
                 recommendations_seed_artists?.tracks.map((item) => {                        
                     return (                            
-                        <div
-                            onClick={() => {
+                        <div className='card-box'>
+                            <div>
+                                <div
+                                    onClick={() => {
+                                        console.log(item)
+                                        dispatch(setCurrentPlayback(item))
+                                    }}
+                                    className='play-button'  
+                                    style={{height: '200px', width: '200px'}}
+                                    >                                        
+                                    <FaPlayCircle style={{ height: '50%', width: '50%' }}/>
+                                </div>
+                                <img src={item.album.images[0].url} />     
+                            </div>
+                            <div
+                                onClick={() => {
                                 dispatch(setType('track'))
                                 dispatch(setObject(item))
                                 setPanelState(!panelState)
-                            }}
-                            className='card-box'
-                        >
-                            <img src={item.album.images[0].url} />                                            
-                            <p className='card-text'>{item.name}</p>
-                            <p className='card-subtext'>{item.artists?.[0]?.name}</p>
-                        </div>    
+                                }}
+                            >
+                                    <p className='card-text'>{item.name}</p>
+                                <p className='card-subtext'>{item.artists?.[0]?.name}</p>
+                            </div>
+                        </div>                                                                                              
                 )   
                 })  
                 }   
                 {                        
                 recommendations_seed_tracks?.tracks.map((item) => {                        
                     return (     
-                          <div
-                            onClick={() => {
+                          <div className='card-box'>
+                            <div>
+                                <div
+                                    onClick={() => {
+                                        console.log(item)
+                                        dispatch(setCurrentPlayback(item))
+                                    }}
+                                    className='play-button'  
+                                    style={{height: '200px', width: '200px'}}
+                                    >                                        
+                                    <FaPlayCircle style={{ height: '50%', width: '50%' }}/>
+                                </div>
+                                <img src={item.album.images[0].url} />     
+                            </div>
+                            <div
+                                onClick={() => {
                                 dispatch(setType('track'))
                                 dispatch(setObject(item))
                                 setPanelState(!panelState)
-                            }}
-                            className='card-box'
-                        >
-                            <img src={item.album.images[0].url} />                                            
-                            <p className='card-text'>{item.name}</p>
-                            <p className='card-subtext'>{item.artists?.[0]?.name}</p>
+                                }}
+                            >
+                                    <p className='card-text'>{item.name}</p>
+                                <p className='card-subtext'>{item.artists?.[0]?.name}</p>
+                            </div>
                         </div>  
                 )
             })

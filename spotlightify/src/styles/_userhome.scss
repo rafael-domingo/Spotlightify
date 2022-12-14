@@ -1,12 +1,16 @@
 .user-home {
     background: linear-gradient(to right,#DDD6F3, #FAACA8);
-    height: 100vh;
+    height: 100%;
     width: 100%;
+    overflow: hidden;
     transition: all 0.5s ease;
 }
 
 .container {
-    transition: all 0.5s ease;
+    transition: all 0.5s ease;    
+    overflow-x: hidden;
+    // overflow-y: scroll;
+    // width: 100%;
 }
 
 .container-inactive-right {
@@ -56,33 +60,58 @@
         height: 100px;
         border-radius: 10px;
     }    
+    .play-button {
+        opacity: 0;
+        transition: 0.5s all ease;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100px;
+        width: 100px;
+        background-color: none;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(16, 225, 16);
+    }
 }
 
-.play-button {
-    opacity: 0;
-    transition: 0.5s all ease;
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100px;
-    width: 100px;    
-    background-color: none;
-    border-radius: 10px;
-    display: flex;    
-    justify-content: center;
-    align-items: center;
-    color: rgb(16, 225, 16);
-}
+// .play-button {
+//     opacity: 0;
+//     transition: 0.5s all ease;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     height: 100px;
+//     width: 100px;    
+//     background-color: none;
+//     border-radius: 10px;
+//     display: flex;    
+//     justify-content: center;
+//     align-items: center;
+//     color: rgb(16, 225, 16);
+// }
 
-.play-button:hover {    
-    opacity: 1;
-    background-color: rgba(16, 16, 16, 0.498);    
-}
+// .play-button:hover {    
+//     opacity: 1;
+//     background-color: rgba(16, 16, 16, 0.498);
+//     scale: 0.5;
+//     border-radius: 50%;    
+// }
 
 .quick-start-card:hover {
     background-color: rgba(255, 255, 255, 0.376);
     scale: 1.1;
-
+    .play-button {
+            opacity: 1;
+            background-color: rgba(16, 16, 16, 0.498);
+            scale: 0.5;
+            border-radius: 50%;
+            img {
+                scale: 0.8;
+            }
+        }  
     
 }
 
@@ -92,16 +121,15 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-wrap: wrap;
-  
+    height: 100%;        
+    overflow-y: hidden;
 }
 .card-array {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start; 
-    overflow-x: scroll;
-    overflow-y: hidden;
-    height: 400px;
-    width: 100%;
+    overflow-x: scroll;        
+    height: 400px;    
 }
 
 .card-array::-webkit-scrollbar {
@@ -110,7 +138,7 @@
 .card-box {
     box-shadow: 2px 2px 10px rgba(192, 192, 192, 0.161);
     display: flex;    
-    padding: 10px;
+    // padding: 10px;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -119,11 +147,27 @@
     cursor: pointer;
     width: 20%;
     height: 300px;
- img {
-    width: 200px;
-    height: 200px;
-    border-radius: 10px;
- }
+    img {
+        width: 200px;
+        height: 200px;
+        border-radius: 10px;
+    }
+
+    .play-button {
+        opacity: 0;
+        transition: 0.5s all ease;
+        position: absolute;
+        // top: 0;
+        // left: 0;
+        height: 100px;
+        width: 100px;
+        background-color: none;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: rgb(16, 225, 16);
+    }
  
 }
 
@@ -131,6 +175,17 @@
     background-color: rgba(255, 255, 255, 0.376);
     border-radius: 20px;
     scale: 1.1;
+
+    .play-button {
+        opacity: 1;
+        background-color: rgba(16, 16, 16, 0.498);
+        scale: 0.5;
+        border-radius: 50%;
+        
+    }
+    // img {
+    //     scale: 0.9;
+    // }
 }  
 
 .card-text {
@@ -153,11 +208,18 @@
     
 }
 
+.page-header {
+    position: fixed;
+    top: 0;
+}
+
 .track-array {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
+    margin-top: 20px;
+    margin-bottom: 50px;
 }
 
 .track-box {

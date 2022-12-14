@@ -8,7 +8,7 @@ function Tracks({ panelState, setPanelState }) {
     const dispatch = useDispatch();
     return (
         <div className='track-container'>
-            <div className='headline'>
+            <div className='page-header'>
                 <h1>Tracks</h1>
             </div>
             <div className='track-array'>

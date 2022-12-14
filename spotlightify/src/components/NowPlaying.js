@@ -11,41 +11,45 @@ function NowPlaying() {
     
     useEffect(() => {
         // update queue when new item is played
-        setTimeout(() => {
-             fetch('/SpotifyPlayback/queue', {
-            method: 'POST',
-            body: new URLSearchParams({
-                access_token
-            })
+        // setTimeout(() => {
+        //      fetch('/SpotifyPlayback/queue', {
+        //     method: 'POST',
+        //     body: new URLSearchParams({
+        //         access_token
+        //     })
           
-        })
-            .then(response => response.json())
-            .then(data => console.log(data));
-        }, 2000);
+        // })
+        //     .then(response => response.json())
+        //     .then(data => console.log(data));
+        // }, 2000);
+        console.log('logged')
+        if (!isPlayingState) {
+            setIsPlayingState(true);
+        }
+        
        
     }, [currentPlayback])
     
+    // setTimeout(() => {
+    //     setIsPlayingState(true);
+    // }, 2000);
 
     return (
-        <div>
-            <div style={{position: 'absolute', bottom: '0', zIndex: 10, width: '100%'}}>
-                <SpotifyWebPlayer                    
-                    token={access_token}
-                    autoPlay={false}
-                    play={isPlayingState}
-                    callback={(state) => {
-                        console.log(state)
-                        setDevice_id(state.deviceId)
-                       
-                    }}
-                    uris={currentPlayback?.uri ? [currentPlayback?.uri] : []}
-                />
-            </div>
-            <div>
-                <button onClick={() => setIsPlayingState(true)}>Play</button>
-                <button onClick={() => setIsPlayingState(false)}>Pause</button>
-            </div>
+        <div style={{position: 'fixed', bottom: '0', zIndex: 10, width: '100%'}}>
+            <SpotifyWebPlayer                    
+                token={access_token}
+                autoPlay={false}
+                play={isPlayingState}
+                callback={(state) => {
+                    setIsPlayingState(state.isPlaying)
+                    console.log(state)
+                    setDevice_id(state.deviceId)
+                    
+                }}
+                uris={currentPlayback?.uri ? [currentPlayback?.uri] : []}
+            />
         </div>
+          
     )
 }
 

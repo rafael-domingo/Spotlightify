@@ -29,7 +29,7 @@ function UserHome() {
     }
 
     return (
-        <div className='user-home' style={{overflow: 'scroll', height: '100vh'}}>            
+        <div className='user-home'>            
             <button style={{ position: 'absolute', right: '500px', top: '0' }} onClick={() => setNavState(!navState)}>Nav</button>
             <button style={{position: 'absolute', right: '1200px', top: '0'}} onClick={() => setPanelState(!panelState)}>Panel</button>
             <Nav isActive={navState} setNavState={setNavState} view={view} setView={setView} />

@@ -9,6 +9,7 @@ import {
 } from 'mdb-react-ui-kit';
 import { setCurrentPlayback } from '../redux/playbackSlice';
 import { setObject, setType } from '../redux/panelSlice';
+import { FaPlayCircle } from 'react-icons/fa';
 
 function FeaturedPlaylists({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
@@ -39,18 +40,30 @@ function FeaturedPlaylists({ panelState, setPanelState }) {
                 {                        
                     featuredPlaylists?.playlists?.items?.map((item) => {                        
                         return (                            
-                            <div
-                                onClick={() => {
+                            <div className='card-box'>
+                                <div>
+                                    <div
+                                        onClick={() => {
+                                            console.log(item)
+                                            dispatch(setCurrentPlayback(item))
+                                        }}
+                                        className='play-button'  
+                                        style={{height: '200px', width: '200px'}}
+                                        >                                        
+                                        <FaPlayCircle style={{ height: '50%', width: '50%' }}/>
+                                    </div>
+                                    <img src={item?.images[0].url}/>                                            
+                                </div>
+                                <div
+                                    onClick={() => {
                                     dispatch(setType('playlist'))
                                     dispatch(setObject(item))
                                     setPanelState(!panelState)
                                 }}
-                                className='card-box'
-                            >
-                                <img src={item?.images[0].url}/>                                            
-                                <p className='card-text'>{item?.name}</p>                                
-                            </div>
-                               
+                                >
+                                    <p className='card-text'>{item?.name}</p>  
+                                    </div>
+                                </div>                                                                                                                                                                                                             
                     )
                 })
                 }   
