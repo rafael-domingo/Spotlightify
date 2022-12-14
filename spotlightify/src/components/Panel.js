@@ -1,13 +1,15 @@
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardSubTitle, MDBCardTitle, MDBCol, MDBRow } from 'mdb-react-ui-kit';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { FaPlayCircle } from 'react-icons/fa';
+import { setCurrentPlayback } from '../redux/playbackSlice';
 
 function Panel({isActive}) {
     const panelState = useSelector((state) => state.panel); 
     const [panelHistory, setPanelHistory] = useState([]); // use to keep track of navigation levels -- enables navigating backward
     const access_token = useSelector((state) => state.user.tokens.access_token);
-
+    const [scrolled, setScrolled] = React.useState(false);
+    const dispatch = useDispatch();
     // useeffect to load panel when clicking from main page
     useEffect(() => {
         console.log(isActive);
@@ -175,46 +177,111 @@ function Panel({isActive}) {
         }
     }
 
+    const handleScroll = (e) => {
+        if (e.target.scrollTop > 0) {
+            if (!scrolled) {
+                setScrolled(true);    
+            }            
+        } else {
+            setScrolled(false);
+        }
+    }
+
     return (
-        <div className={`panel ${isActive ? 'panel-active' : ''}`}>
-            <MDBCard>
-                <MDBRow style={{position: 'sticky', top: 0}}>
-                    <MDBCol size={3}>
-                        <MDBCardImage position='top' src={panelHistory?.[panelHistory.length -1]?.image} />
-                    </MDBCol>
-                    <MDBCol size={9}>
-                        <MDBCardTitle>{panelHistory?.[panelHistory.length -1]?.title}</MDBCardTitle>
-                        <MDBCardSubTitle>{panelHistory?.[panelHistory.length - 1]?.subtitle}</MDBCardSubTitle>
-                    </MDBCol>
-                </MDBRow>
+        <div
+            className={`panel ${isActive ? 'panel-active' : ''}`}
+            onScroll={handleScroll}
+        >
+            <div>
+
+
                 
-                <MDBCardBody style={{ top: 100 }}>             
+                
+                <div className={`panel-header ${scrolled ? 'panel-header-scroll' : ''}`}>
                     {
-                        panelHistory.length > 1 && (
-                            <MDBBtn onClick={() => handlePanelBack()}>Back</MDBBtn>
-                        )
-                    }    
+                    panelHistory.length > 1 && (
+                        <button onClick={() => handlePanelBack()}>Back</button>
+                    )
+                    }   
+                    <div>
+                        <img src={panelHistory?.[panelHistory.length -1]?.image} />
+                    </div>
+                    <div style={{paddingLeft: '10px'}}>
+                        <h1>{panelHistory?.[panelHistory.length -1]?.title}</h1>
+                        <p>{panelHistory?.[panelHistory.length - 1]?.subtitle}</p>
+                    </div>
+                
+                </div>
+                <div
+                    className='panel-body'
+                    
+                >   
+                <div className='panel-container'>
+                
+                <h1>Top Tracks</h1>    
+                    
                     {       
                                      
-                        panelHistory?.[panelHistory.length -1]?.list?.map((item) => {                        
-                            return (                        
-                                <p onClick={() => handlePanelClick(item)} className='text-muted'>{item?.name}</p>                                
+                        panelHistory?.[panelHistory.length - 1]?.list?.map((item) => {     
+                            console.log(item)                            
+                            var showImage = panelHistory?.[panelHistory.length - 1]?.type === 'playlist' || panelHistory?.[panelHistory.length - 1]?.type === 'artist' 
+                            return (
+                                <div
+                                    className='panel-item'
+                                  
+                                >   <div>                                        
+                                        <div
+                                            onClick={() => {
+                                                console.log(item.album)
+                                                dispatch(setCurrentPlayback(item))
+                                            }}
+                                            className='play-button'                                              
+                                            >                                        
+                                            <FaPlayCircle style={{ height: '50%', width: '50%'}}/>
+                                        </div>    
+                                        <img src={showImage ? item?.album.images[0].url : ''} style={showImage ? {} : { display: 'none' }} />
+                                        <div style={showImage ? {display: 'none'} : {width: '50px', height: '50px'}}>
+                                        </div>
+                                    </div>
+                                    <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap'}}>
+                                        <p onClick={() => handlePanelClick(item)}>{item?.name}</p>                                
+                                        <p>{item?.artists[0].name}</p>                                    
+                                    </div>
+                                </div>
                             )                            
                         })
                         
                     }
+                    </div>                   
+                    <div className='panel-container'>
+
+                    
+                    <h1>Albums</h1>
                     {
                         panelState?.type === 'artist' && (
                              panelHistory?.[panelHistory.length -1]?.sublist?.map((item) => {                        
-                            return (                        
-                                <p onClick={() => handlePanelClick(item)} className='text'>{item?.name}</p>                                
+                            return (        
+                                
+                                <div
+                                    className='album-box'
+                                    onClick={() => handlePanelClick(item)}
+                                >
+                                    <div
+                                        className='play-button'
+                                    >
+                                        <img src={item?.images?.[0]?.url}/>
+                                    </div>
+                                    <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center', flexWrap: 'wrap', width: '100%'}}>
+                                        <p onClick={() => handlePanelClick(item)} className='card-text'>{item?.name}</p>                                
+                                    </div>
+                                </div>
                             )                            
                         })
                         )
                     }
-                        
-                </MDBCardBody>
-            </MDBCard>
+                    </div>
+                </div>
+            </div>
            
         </div>
     )
