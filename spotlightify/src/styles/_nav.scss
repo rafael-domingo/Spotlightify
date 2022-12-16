@@ -3,18 +3,18 @@
     top: 0;
     left: 0;
     width: 20rem;
-    height: 100%;
-    background-color: white;
+    height: 100%;    
     box-shadow: 2px 2px 50px rgb(66, 66, 66);
-    overflow-y: scroll;
-    transform: translateX(-100%);
+    overflow-y: hidden;
+    transform: translateX(-90%);
     transition: all 0.5s ease;
-    opacity: 0;
+    opacity: 1;
     z-index: 10;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     cursor: pointer;
+    background: linear-gradient(120deg, #FAACA8 20%, #DDD6F3);
 }
 
 .nav-active {
@@ -23,18 +23,25 @@
 }
 
 .nav-item {
-    color: #999999;
+    color: white;
     opacity: 0.5;
     font-size: 1rem;
     padding: 1rem;
     transition: all 0.5s ease;
     text-align: center;
+    font-weight: bold;
+}
+
+.nav-item:hover {    
+    opacity: 1;
+    font-size: 2rem;
 }
 
 .selected {
     color: #1DB954;
     opacity: 1;
     font-size: 2rem;
+    font-weight: bold;
 }
 
 .logo {
@@ -43,8 +50,8 @@
     align-items: center;
     padding: 3rem;
     h1 {
-        color: black;
-        font-weight: bold;
+        color: white;
+        font-weight: lighter;
         font-size: 3rem;
     }
     

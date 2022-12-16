@@ -2,40 +2,59 @@
 import React from 'react';
 
 
-function Nav({isActive, view, setView}) {    
+function Nav({isActive, setNavState, view, setView}) {    
     return (
-        <div className={`nav ${isActive ? 'nav-active' : ''}`}>
+        <div
+            className={`nav ${isActive ? 'nav-active' : ''}`}
+            onMouseLeave={() => setNavState(false)}
+            onMouseEnter={() => setNavState(true)}
+        >
             <div className='logo'>
-                <h1>Spotlightify</h1>
+                <h1>Spot<span style={{color: '#1DB954', fontWeight: 'bold'}}>light</span>ify</h1>
             </div>
             <div>
                 <p
                     className={`nav-item ${view === 'Home' ? 'selected' : ''}`}
-                    onClick={() => { setView('Home') }}
+                    onClick={() => {
+                        setView('Home')
+                        // setNavState(false)
+                    }}
                 >
                     Home
                 </p>
                 <p
                     className={`nav-item ${view === 'Playlists' ? 'selected' : ''}`}
-                    onClick={() => { setView('Playlists') }}
+                    onClick={() => {
+                        setView('Playlists')
+                        // setNavState(false)
+                    }}
                 >
                     Playlists
                 </p>
                 <p
                     className={`nav-item ${view === 'Artists' ? 'selected' : ''}`}
-                    onClick={() => { setView('Artists') }}
+                    onClick={() => {
+                        setView('Artists')
+                        // setNavState(false)
+                    }}
                 >
                     Artists
                 </p>
                 <p
                     className={`nav-item ${view === 'Albums' ? 'selected' : ''}`}
-                    onClick={() => { setView('Albums') }}
+                    onClick={() => {
+                        setView('Albums')
+                        // setNavState(false)
+                    }}
                 >
                     Albums
                 </p>
                 <p
                     className={`nav-item ${view === 'Tracks' ? 'selected' : ''}`}
-                    onClick={() => { setView('Tracks') }}
+                    onClick={() => {
+                        setView('Tracks')
+                        // setNavState(false)
+                    }}
                 >
                     Tracks
                 </p>

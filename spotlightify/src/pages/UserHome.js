@@ -18,29 +18,36 @@ function UserHome() {
     const [navState, setNavState] = useState(false);
     const [panelState, setPanelState] = useState(false);
     const [view, setView] = useState('Home');
-
-    useEffect(() => {
-        setNavState(false);
-    }, [view])
+    const [navArea, setNavArea] = useState(false);
     
+    useEffect(() => {
+        if (navState || panelState) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'scroll';
+        }
+        if (navState) {
+            setNavArea(false);
+        }
+    }, [navState, panelState])
 
+    
     const handleViewChange = () => {
 
     }
 
     return (
-        <div className='user-home'>            
-            <button style={{ position: 'absolute', right: '500px', top: '0' }} onClick={() => setNavState(!navState)}>Nav</button>
-            <button style={{position: 'absolute', right: '1200px', top: '0'}} onClick={() => setPanelState(!panelState)}>Panel</button>
+        <div className='user-home'>                                  
             <Nav isActive={navState} setNavState={setNavState} view={view} setView={setView} />
-            <Panel isActive={panelState} />
+            <Panel isActive={panelState} setPanelState={setPanelState} />
             <NowPlaying />
-            <div className={`container ${navState ? 'container-inactive-right': ''} ${panelState ? 'container-inactive-left': ''}`}>
-            {view === 'Home' && (<Home panelState={panelState} setPanelState={setPanelState}/>)}       
-            {view === 'Playlists' && (<Playlists panelState={panelState} setPanelState={setPanelState} />)}
-            {view === 'Artists' && (<Artists panelState={panelState} setPanelState={setPanelState}/>)}
-            {view === 'Albums' && (<Albums panelState={panelState} setPanelState={setPanelState}/>)}
-            {view === 'Tracks' && (<Tracks panelState={panelState} setPanelState={setPanelState}/>)}
+            <div className={`container ${navState ? 'container-inactive-right' : ''} ${panelState ? 'container-inactive-left' : ''}`}>                                                         
+                {view === 'Home' && (<Home panelState={panelState} setPanelState={setPanelState}/>)}       
+                {view === 'Playlists' && (<Playlists panelState={panelState} setPanelState={setPanelState} />)}
+                {view === 'Artists' && (<Artists panelState={panelState} setPanelState={setPanelState}/>)}
+                {view === 'Albums' && (<Albums panelState={panelState} setPanelState={setPanelState}/>)}
+                {view === 'Tracks' && (<Tracks panelState={panelState} setPanelState={setPanelState} />)}
+            
             </div>
          
         </div>

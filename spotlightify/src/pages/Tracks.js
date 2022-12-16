@@ -2,6 +2,8 @@ import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setObject, setType } from '../redux/panelSlice';
+import { FaPlayCircle } from 'react-icons/fa';
+import { setCurrentPlayback } from '../redux/playbackSlice';
 
 function Tracks({ panelState, setPanelState }) {
     const userState = useSelector((state) => state.user);
@@ -15,16 +17,28 @@ function Tracks({ panelState, setPanelState }) {
                 {
                     userState.savedTracks?.items.map((item) => {
                         return (
-                            <div onClick={() => {
-                                dispatch(setType('track'))
-                                dispatch(setObject(item.track))
-                                setPanelState(!panelState);
-                            }}                                
-                                className='track-box'>
-                                <img src={item.track?.album?.images[0].url}/>
-                                <p className='track-text' style={{textAlign: 'left'}}>{item.track?.name}</p>
-                                <p className='track-subtext'> {item.track?.artists[0].name}</p>
-                            </div>
+                            <div className='track-item'>
+                                <div>
+                                    <div
+                                        onClick={() => {                                            
+                                            dispatch(setCurrentPlayback(item.track))
+                                        }}
+                                        className='play-button'>
+                                        <FaPlayCircle style={{height: '50%', width: '50%'}}/>
+                                    </div>
+                                    <img src={item.track?.album?.images[0].url}/>
+                                </div>
+                                <div
+                                    onClick={() => {
+                                        dispatch(setType('track'))
+                                        dispatch(setObject(item.track))
+                                        setPanelState(!panelState);
+                                    }}     
+                                    className='track-text-container'>
+                                    <p className='track-text' style={{textAlign: 'left'}}>{item.track?.name}</p>
+                                    <p className='track-subtext'> {item.track?.artists[0].name}</p>
+                                </div>
+                            </div>                            
                         )
                     })
                 }     

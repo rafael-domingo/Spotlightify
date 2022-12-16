@@ -1,14 +1,16 @@
 import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardSubTitle, MDBCardTitle, MDBCol, MDBRow } from 'mdb-react-ui-kit';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaPlayCircle } from 'react-icons/fa';
 import { setCurrentPlayback } from '../redux/playbackSlice';
-
-function Panel({isActive}) {
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import { RiCloseCircleLine } from 'react-icons/ri';
+function Panel({isActive, setPanelState}) {
     const panelState = useSelector((state) => state.panel); 
     const [panelHistory, setPanelHistory] = useState([]); // use to keep track of navigation levels -- enables navigating backward
     const access_token = useSelector((state) => state.user.tokens.access_token);
     const [scrolled, setScrolled] = React.useState(false);
+    const windowRef = useRef();
     const dispatch = useDispatch();
     // useeffect to load panel when clicking from main page
     useEffect(() => {
@@ -117,6 +119,9 @@ function Panel({isActive}) {
       
     }, [panelState, isActive])
 
+    useEffect(() => {
+        windowRef.current.scrollTo(0, 0);
+    }, [panelHistory])
     // set new states when clicking link inside a panel and add to panelhistory
     const handlePanelBack = () => {
         setPanelHistory((current) => current.slice(0, -1));
@@ -191,22 +196,32 @@ function Panel({isActive}) {
         <div
             className={`panel ${isActive ? 'panel-active' : ''}`}
             onScroll={handleScroll}
+            ref={windowRef}
         >
             <div>
 
 
                 
-                
+            
                 <div className={`panel-header ${scrolled ? 'panel-header-scroll' : ''}`}>
+                    <div
+                        onClick={() => {
+                            setPanelState(false)
+                        }}
+                        className='close-button'>
+                        <RiCloseCircleLine style={{ height: '100%', width: '100%' }} />
+                    </div>  
                     {
                     panelHistory.length > 1 && (
-                        <button onClick={() => handlePanelBack()}>Back</button>
+                            <div className='back-button' onClick={() => handlePanelBack()}>
+                                <IoMdArrowRoundBack style={{ height: '100%', width: '100%' }} />
+                            </div>
                     )
                     }   
                     <div>
                         <img src={panelHistory?.[panelHistory.length -1]?.image} />
                     </div>
-                    <div style={{paddingLeft: '10px'}}>
+                    <div style={{paddingLeft: '10px', display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap'}}>
                         <h1>{panelHistory?.[panelHistory.length -1]?.title}</h1>
                         <p>{panelHistory?.[panelHistory.length - 1]?.subtitle}</p>
                     </div>
@@ -217,9 +232,12 @@ function Panel({isActive}) {
                     
                 >   
                 <div className='panel-container'>
-                
-                <h1>Top Tracks</h1>    
-                    
+                {
+                    panelHistory?.[panelHistory.length - 1]?.type === 'artist' && (<h1>Top Tracks</h1>)
+                }
+                {
+                    panelHistory?.[panelHistory.length - 1]?.type !== 'artist' && (<h1>Tracks</h1>)           
+                }                                
                     {       
                                      
                         panelHistory?.[panelHistory.length - 1]?.list?.map((item) => {     
@@ -253,12 +271,14 @@ function Panel({isActive}) {
                         
                     }
                     </div>                   
-                    <div className='panel-container'>
+                    <div className='panel-container' style={panelHistory?.[panelHistory.length - 1]?.type !== 'artist' ? {display: 'none'}: {}}>
 
                     
-                    <h1>Albums</h1>
                     {
-                        panelState?.type === 'artist' && (
+                    panelHistory?.[panelHistory.length - 1]?.type === 'artist' && (<h1>Discography</h1>)
+                    }                  
+                    {
+                        panelHistory?.[panelHistory.length - 1]?.type === 'artist' && (
                              panelHistory?.[panelHistory.length -1]?.sublist?.map((item) => {                        
                             return (        
                                 
