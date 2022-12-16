@@ -56,3 +56,20 @@
     }
     
 }
+
+.logout {
+    
+    p {
+        color: white;
+        text-align: center;                        
+        transition: 0.5s all ease;
+    }
+}
+
+.logout:hover {
+    p {
+        color: #1DB954;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+}

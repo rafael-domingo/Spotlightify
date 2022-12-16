@@ -42,7 +42,8 @@ export const userSlice = createSlice({
         },
         setRecentlyPlayed: (state, action) => {
             state.recentlyPlayed = action.payload
-        }
+        },
+        resetUser: () => initialState
     }
 })
 
@@ -55,7 +56,8 @@ export const {
     setSavedAlbums,
     setFollowedArtists,
     setUserPlaylists,
-    setRecentlyPlayed
+    setRecentlyPlayed,
+    resetUser
 } = userSlice.actions;
 
 export default userSlice.reducer;

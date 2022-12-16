@@ -1,8 +1,11 @@
 // use for navigating between 'Home', 'Aritsts', 'Albums', 'Playlists', 'Search'
 import React from 'react';
-
-
-function Nav({isActive, setNavState, view, setView}) {    
+import { useDispatch } from 'react-redux';
+import { resetUser } from '../redux/userSlice';
+import { useNavigate } from 'react-router-dom';
+function Nav({ isActive, setNavState, view, setView }) {    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     return (
         <div
             className={`nav ${isActive ? 'nav-active' : ''}`}
@@ -12,7 +15,7 @@ function Nav({isActive, setNavState, view, setView}) {
             <div className='logo'>
                 <h1>Spot<span style={{color: '#1DB954', fontWeight: 'bold'}}>light</span>ify</h1>
             </div>
-            <div>
+            <div style={{width: '100%'}}>
                 <p
                     className={`nav-item ${view === 'Home' ? 'selected' : ''}`}
                     onClick={() => {
@@ -59,7 +62,14 @@ function Nav({isActive, setNavState, view, setView}) {
                     Tracks
                 </p>
             </div>
-            
+            <div
+                onClick={() => {
+                    dispatch(resetUser())
+                    navigate('/')
+                }}
+                className='logout'>
+                <p>Logout</p>
+            </div>
         </div>
     )
 }
