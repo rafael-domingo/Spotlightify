@@ -1,5 +1,6 @@
 .welcome{
-    background: linear-gradient(to right, #191414, #191414);
+    background: linear-gradient(to right, #DDD6F3, #FAACA8);
+    opacity: 0.5;
     transition: all 0.5s ease;
     display: flex;
     justify-content: center;
@@ -10,7 +11,7 @@
 }
 
 .active-welcome {
-    background: linear-gradient(to right, #DDD6F3, #FAACA8);
+    // background: linear-gradient(to right, #DDD6F3, #FAACA8);
 }
 
 .logo-div {
@@ -18,19 +19,35 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    width: 100%;    
-    height: 100%;
+    width: 100vw;    
+    height: 100vh;
+    z-index: 20;
+    // background: linear-gradient(to right, #DDD6F3, #FAACA8);
+    backdrop-filter: blur(2px);
+    .logo-container {
+            width: 75%;
+            height: 300px;            
+            background-color: rgba(47, 126, 85, 0.429);
+            border-radius: 20px;
+        }
 }
 
 .logo {
-    color: #1DB954;
+    color: white;
     text-align: center;
     width: 100%;        
-    transition: all 0.5 ease;
+    transition: 1s all ease;
+    font-size: 7rem;
+    font-weight: bold;
+   
+}
+.inactive {
+    transition: 0.5s all ease;
+    color: white;
 }
 
-.active-logo {
-    color: white;
+.active {
+    color: #1DB954;
 }
 
 .login-button {
@@ -43,4 +60,49 @@
     border: none;
     color: white;
     cursor: pointer;
+    transition: 0.5s all ease;
+}
+
+.login-button:hover {
+    scale: 1.1;
+}
+
+
+
+.album-art-container {
+    opacity: 0;
+    transition: 0.5s all ease;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    position: fixed;
+    z-index: 0;
+    background: linear-gradient(to right, #DDD6F3, #FAACA8);
+}
+
+.album-art-container-show {
+    opacity: 1;
+}
+.album-art {
+    width: 100px;
+    height: 100px;
+    margin: 30px;
+    border-radius: 20px;
+    transition: 1s all ease;
+}
+@media screen and (min-width: 1800px) {
+    .album-art {
+        width: 300px;
+        height: 300px;
+        margin: 30px;
+    }  
+}
+
+.album-art-animate {
+    scale: 1.2;
+}
+
+.album-art-animate-1 {
+    scale: 0.8;
 }

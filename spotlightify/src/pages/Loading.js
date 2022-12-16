@@ -10,7 +10,9 @@ import {
     setUserPlaylists,
     setRecentlyPlayed
 } from '../redux/userSlice';
-
+import {
+    MDBSpinner
+} from 'mdb-react-ui-kit'
 function Loading() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -114,8 +116,8 @@ function Loading() {
     }
 
     return (
-        <div>
-            <h1>Loading</h1>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100vw', height: '100vh'}}>
+            <MDBSpinner/>
         </div>
     )
 }

@@ -3,6 +3,7 @@ const express = require('express');
 const request = require('request');
 const querystring = require('querystring');
 const { response } = require('express');
+const { URLSearchParams } = require('url');
 const router = express.Router();
 
 // AUTHORIZATION
@@ -60,6 +61,25 @@ router.get('/callback', async (req, res) => {
         })
     }
 
+})
+
+router.get('/client_credentials', async (req, res) => {
+    console.log('client credentials')
+    const url = 'https://accounts.spotify.com/api/token';
+    const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Authorization': 'Basic ' + (new Buffer.from(process.env.client_id + ':' + process.env.client_secret).toString('base64'))
+    }
+
+    return fetch(url, {
+        method: 'POST',
+        headers,
+        body: new URLSearchParams({
+            'grant_type': 'client_credentials'
+        })
+    })
+        .then(res => res.json())
+        .then(credentials => res.json(credentials))
 })
 
 // USER DATA
