@@ -18,6 +18,7 @@ This project is complete and no further updates will be made. It is not intended
 <img src="/spotlightify/public/spotlightify-screenshot.png" width="400" height="300"/>
 <img src="/spotlightify/public/spotlightify-screenshot-1.png" width="400" height="300"/>
 <img src="/spotlightify/public/spotlightify-screenshot-2.png" width="400" height="300"/>
+<img src="/spotlightify/public/spotlightify-screenshot-3.png" width="400" height="300"/>
 </p>
 
 # Installation and Setup Instructions
@@ -26,8 +27,13 @@ This project is complete and no further updates will be made. It is not intended
 
 `npm install`
 
-## To start app:
+## To start server:
 
+`npm start`
+
+## To start React App:
+
+`cd spotlightify`
 `npm start`
 
 # Tech Stack
