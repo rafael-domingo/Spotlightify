@@ -15,9 +15,9 @@ This project is complete and no further updates will be made. It is not intended
 # Screenshots
 
 <p float="left">
-<img src="/spotlightify/public/spotlightify-screenshot.png" width="400" height="200"/>
-<img src="/spotlightify/public/spotlightify-screenshot-1.png" width="400" height="200"/>
-<img src="/spotlightify/public/spotlightify-screenshot-2.png" width="400" height="200"/>
+<img src="/spotlightify/public/spotlightify-screenshot.png" width="400" height="300"/>
+<img src="/spotlightify/public/spotlightify-screenshot-1.png" width="400" height="300"/>
+<img src="/spotlightify/public/spotlightify-screenshot-2.png" width="400" height="300"/>
 </p>
 
 # Installation and Setup Instructions
