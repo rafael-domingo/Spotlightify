@@ -9,6 +9,7 @@ import Albums from './Albums';
 import Tracks from './Tracks';
 import NowPlaying from '../components/NowPlaying';
 import Panel from '../components/Panel';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -19,8 +20,8 @@ function UserHome() {
     const [panelState, setPanelState] = useState(false);
     const [view, setView] = useState('Home');
     const [navArea, setNavArea] = useState(false);
-    
-    useEffect(() => {
+    const navigate = useNavigate();
+    useEffect(() => {        
         if (navState || panelState) {
             document.body.style.overflow = 'hidden';
         } else {

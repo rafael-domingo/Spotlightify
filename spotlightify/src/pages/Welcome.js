@@ -33,7 +33,7 @@ function Welcome() {
         if (searchParams.get('access_token') !== null) {
             handleTokens()
             handleGetUserInfo()            
-            .then(navigate('/loading'))            
+            .then(navigate('/loading', { replace: true }))            
         }        
         fetch('/Spotify/client_credentials').then(response => response.json()).then(data => handleGetNewReleases(data))
     }, [0])

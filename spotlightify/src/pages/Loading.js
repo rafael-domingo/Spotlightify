@@ -28,7 +28,7 @@ function Loading() {
         handleGetRecentlyPlayed().then(data => dispatch(setRecentlyPlayed(data)));            
         handleGetFollowedArtists().then(data => dispatch(setFollowedArtists(data)));
         setTimeout(() => {
-            navigate('/userhome');
+            navigate('../userhome', { replace: true });
 
         }, 2000);
     }, [0])
