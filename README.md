@@ -53,7 +53,7 @@ This project helped me practice calls to external APIs using the `NodeJS` runtim
 
 - The general look and feel of the application; it provides the levity and playfulness that I was going for.
 - The structure and set-up of the `ExpressJS` code to call the Spotify API.
-- The use of animations to indicate which elements can be interacted with (particularly the Play Button interface on album art and the header element on the details panel which changes on user behvaior)
+- The use of animations to indicate which elements can be interacted with (particularly the Play Button interface on album art and the header element on the details panel which changes on user behvaior).
 - The landing page which provides a dynamic way to make a first impression on a new user.
 
 ## Things that could be improved
@@ -61,3 +61,4 @@ This project helped me practice calls to external APIs using the `NodeJS` runtim
 - The application is limited in the user's ability to access all aspects of the Spotify API. It provides at a minimum a limited selection of the user's Artists, Albuns, Tracks, and Playlists and there is no Search functionality. This was primarily due to the desire to provide a minimum shippable product and the intended purpose was to explore the Spotify API and play around with new user interface concepts. Given more time, I would like to add additional functionality to fully re-create the existing Spotify desktop experience.
 - The component that handles the Spotify playback API was taken from the `React Spotify Web Playback` package. Given more time, I would have preferred to create a component from scratch so I could create a full-page Now Playing screen that has full-screen cover art and can show the user's queue.
 - Since this was my first personal project that utilized `Sass`, the naming and layout of the various stylesheets were a little haphazard; improvements can be made to the naming conventions of the classNames to conform to best practices.
+- Currently, the application doesn't remember whether a user has already logged in so the user has to log in everytime they reload the webpage. Ideally I would've implemented cookies to help remember a user's access and refresh tokens so they wouldn't have to do this.
